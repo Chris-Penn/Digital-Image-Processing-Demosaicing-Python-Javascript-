@@ -1,0 +1,38 @@
+const fs = require('fs')
+let data = fs.readFileSync('cpenn4_hard.txt')
+let intensities = JSON.parse(data)
+
+
+let height = 1024
+let width = 1024
+
+let stackIntensities = []
+for(let i=0; i < height * width; i = i + width){
+  let row = []
+  for(let j = i; j < i + width; j++){
+    row.push(intensities[j])
+  }
+  stackIntensities.push(row)
+}
+
+console.log("RGB")
+console.log(parseInt(height / 2))
+console.log(parseInt(width / 2))
+
+for(let i=0; i < height; i = i + 2){
+  let row1 = stackIntensities[i]
+  let row2 = stackIntensities[i + 1]
+
+  for(let j = 0; j < width; j = j + 2){ 
+    let blue = row1[j]
+    let green1 = row1[j+1]
+    let green2 = row2[j]
+    let red = row2[j+1]
+
+    let green = parseInt((green1 + green2) / 2);
+
+    console.log(red + " " + green + " " + blue)
+    
+  }
+  
+}
